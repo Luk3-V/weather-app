@@ -1,0 +1,56 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+/*----------------------------------*/
+
+body {
+    --currentBG: aliceblue;
+    font-family: Helvetica, sans-serif;
+}
+
+.content {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.logo {
+    margin: 25px 0;
+    text-align: center;
+}
+
+form {
+    display: flex;
+}
+
+/* ------ CURRENT -------- */
+
+.current {
+    margin: 25px 0;
+    background-color: var(--currentBG);
+    padding: 25px;
+}
+.current > .top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+.top > .right {
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+}
+.current > .bottom {
+    display: flex;
+    justify-content: space-between;
+}
+.bottom > i {
+    align-self: flex-end;
+    font-size: 4em;
+}
+

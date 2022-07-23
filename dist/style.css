@@ -31,7 +31,7 @@ form {
 /* ------ CURRENT -------- */
 
 .current {
-    margin: 25px 0;
+    margin: 25px 0 0 0;
     background-color: var(--currentBG);
     padding: 25px;
 }
@@ -54,3 +54,51 @@ form {
     font-size: 4em;
 }
 
+/* ----------- HOURLY -----------*/
+
+.hourly > div {
+    overflow: auto;
+    white-space: nowrap;
+    padding: 25px;
+    text-align: center;
+}
+
+.hour {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+.hour > i {
+    font-size: 2em;
+    margin: 10px 0;
+}
+.hour:first-child {
+    margin-left: 0;
+}
+.hour:last-child {
+    margin-right: 0;
+}
+
+/* ----------- DAILY -----------*/
+
+.daily {
+    padding: 25px;
+}
+.daily > table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px solid black;
+}
+
+td {
+    padding: 20px 0;
+}
+td > i {
+    font-size: 2em;
+}
+td:last-child {
+    text-align: right;
+}

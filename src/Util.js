@@ -36,6 +36,26 @@ export default class Util {
         return {date, time};
     }
 
+    static getDayOfWeek(dt, timezone) {
+        let dtObj;
+        if(dt)
+            dtObj = fromUnixTime(dt + timezone);
+        else
+            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone);
+
+        let day = dtObj.getUTCDay();
+        switch(day){
+            case 0: return 'Sunday';
+            case 1: return 'Monday';
+            case 2: return 'Tuesday';
+            case 3: return 'Wednesday';
+            case 4: return 'Thursday';
+            case 5: return 'Friday';
+            case 6: return 'Saturday';
+        }
+        return;
+    }
+
     static formatDate(dtObj) {
         let date = dtObj.toUTCString().substring(0, Util.nthIndexOf(dtObj.toUTCString(), ' ', 4));
 

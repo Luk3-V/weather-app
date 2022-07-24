@@ -11,26 +11,50 @@
 <body>
     <div class="content">
         <h1 class="logo">weather-app</h1>
-        <form class="query">
-            <input type="text" id="location" placeholder="Search">
-            <button type="submit">Submit</button>
-        </form>
+        <div class="menu">
+            <form class="query">
+                <input type="text" id="location" placeholder="Enter a Location">
+                <button id="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <button class="unit-toggle">
+                <span class="f active">°F</span>
+                <span>/</span>
+                <span class="c">°C</span>
+            </button>
+        </div>
         
         <div class="current">
+            <img src="" alt="">
             <div class="top">
-                <h2 class="location">Cypress</h2>
-                <div class="right">
+                <h1 class="location">Cypress</h1>
+                <div class="current-dt">
                     <span class="date">7/21/22</span>
                     <span class="time">11:11 AM</span>
                 </div>
             </div>
             <div class="bottom">
-                <div class="left">
-                    <h1 class="temp">98°F</h1>
-                    <h3 class="sky">Partly Cloudy</h3>
-                    
-                </div>
                 <i class="fa-solid fa-cloud-sun"></i>
+                <div class="current-stats">
+                    <div class="temp">98°F</div>
+                    <div>
+                        <h3 class="sky">Partly Cloudy</h3>
+                        <span class="feels">Feels Like: 106°</span>
+                    </div> 
+                </div>
+            </div>
+            <div class="extra">
+                <div class="left">
+                    <div class="stat"><span>Wind:</span> <span class="wind"></span></div>
+                    <div class="stat"><span>Rain Chance:</span> <span class="rain"></span></div>
+                    <div class="stat"><span>Precipitation:</span> <span class="precipitation"></span></div>
+                    <div class="stat"><span>Visability:</span> <span class="visibility"></span></div>
+                </div>
+                <div class="right">
+                    <div class="stat"><span>Humidity:</span> <span class="humidity"></span></div>
+                    <div class="stat"><span>Dew Point:</span> <span class="dew-point"></span></div>
+                    <div class="stat"><span>Pressure:</span> <span class="pressure"></span></div>
+                    <div class="stat"><span>UV Index:</span> <span class="uv-index"></span></div>
+                </div>   
             </div>
         </div>
         <div class="hourly">
@@ -39,9 +63,9 @@
             </div>
         </div>
         <div class="daily">
-            <table>
+            <div>
 
-            </table>
+            </div>
         </div>
     </div>
     <script src="main.js"></script>

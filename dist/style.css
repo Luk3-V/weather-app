@@ -9,14 +9,20 @@
 /*----------------------------------*/
 
 body {
-    --currentBG: aliceblue;
+    --primary: whitesmoke;
+    --secondary: #ddd;
+    --bodyBG: #111;
+    --secondBG: #1c1c1c;
+    --hover: #ccc;
     font-family: Helvetica, sans-serif;
+    color: var(--primary);
+    background-color: var(--bodyBG);
 }
 
 .content {
     width: 100%;
     max-width: 700px;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 
 .logo {
@@ -24,37 +30,158 @@ body {
     text-align: center;
 }
 
-form {
+.menu {
     display: flex;
+}
+form {
+    flex: 1 1 auto;
+    margin-right: 10px;
+    display: flex;
+}
+form > input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    border: none;
+    background-color: var(--primary);
+    height: 30px;
+    flex: 1 1 auto;
+}
+form > button {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+    padding: 0 20px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+form > button:hover {
+    background-color: var(--hover);
+    border: 1px solid var(--hover);
+}
+.unit-toggle {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    cursor: pointer;
+    padding: 10px 25px;
+    background-color: var(--secondary);
+    border-radius: 5px;
+    border: 1px solid var(--secondary);
+    font-size: 1rem;
+}
+.unit-toggle:hover{
+    background-color: var(--hover);
+    border: 1px solid var(--hover);
+}
+.unit-toggle > .f {
+    margin-right: 5px;
+}
+.unit-toggle > .c {
+    margin-left: 5px;
+}
+.unit-toggle > .active {
+    font-weight: bold;
 }
 
 /* ------ CURRENT -------- */
 
 .current {
-    margin: 25px 0 0 0;
-    background-color: var(--currentBG);
+    position: relative;
+    margin: 10px 0 0 0;
+    overflow-y: hidden;
     padding: 25px;
+    border-radius: 5px;
+    text-shadow: 2px 2px black;
+}
+.current > img {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    top: 0;
+    left: 0;
+    filter: contrast(75%) brightness(60%);
 }
 .current > .top {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
 }
-.top > .right {
+.location {
+    font-weight: normal;
+    align-items: center;
+}
+.current-dt {
     display: flex;
     flex-direction: column;
     text-align: end;
 }
+
 .current > .bottom {
     display: flex;
-    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 25px;
 }
 .bottom > i {
-    align-self: flex-end;
-    font-size: 4em;
+    margin-right: 25px;
+    font-size: 3rem;
+}
+.current-stats {
+    display: flex;
+    align-items: flex-end;
+}
+.temp {
+    display: flex;
+    font-weight: normal;
+}
+.temp > h1 {
+    font-size: 4rem;
+    line-height: .8;
+}
+.temp > span {
+    font-size: 2rem;
+    align-self: flex-start;
+}
+.current-stats > div:nth-child(2) {
+    margin-left: 25px;
+}
+.sky {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+.current-stats > div:nth-child(3) {
+    margin-left: 25px;
+}
+
+.current > .extra {
+    display: flex;
+    border-top: 1px solid var(--primary);
+    padding-top: 25px;
+}
+.extra > div {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 50%;
+} 
+.extra > .left {
+    padding-right: 10px;
+}
+.extra > .right {
+    padding-left: 10px;
+}
+.stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
 }
 
 /* ----------- HOURLY -----------*/
+
+.hourly {
+    margin-top: 10px;
+    padding-top: 12px;
+    background-color: var(--secondBG);
+    border-radius: 5px;
+}
 
 .hourly > div {
     overflow: auto;
@@ -66,11 +193,15 @@ form {
 .hour {
     display: inline-flex;
     flex-direction: column;
-    margin: 0 20px;
+    margin: 0 25px;
+}
+.hour-temp {
+    margin: 10px 0 0 0;
+    font-size: 1.75rem;
 }
 .hour > i {
-    font-size: 2em;
-    margin: 10px 0;
+    font-size: 1.75rem;
+    margin: 5px 0;
 }
 .hour:first-child {
     margin-left: 0;
@@ -82,23 +213,73 @@ form {
 /* ----------- DAILY -----------*/
 
 .daily {
+    margin-top: 10px;
     padding: 25px;
+    background-color: var(--secondBG);
+    border-radius: 5px;
 }
+.day {
+    width: 100%;
+    display: flex;
+    padding: 10px 0;
+    align-items: center;
+}
+.day > .day-of-week {
+    flex: 0 0 15%;
+}
+.day-temp {
+    flex: 0 0 20%;
+}
+.day-temp > span:first-child {
+    font-size: 1.25rem;
+    margin-right: 5px;
+}
+.day-temp > span:last-child {
+    margin-left: 5px;
+}
+.day > .weather {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+}
+.day > .weather > i {
+    font-size: 1.75rem;
+    width: 50px;
+}
+.day > .rain {
+    flex: 0 0 14%;
+}
+.day > .wind {
+    flex: 0 0 14%;
+}
+
 .daily > table {
     width: 100%;
     border-collapse: collapse;
 }
 
-tr {
-    border-bottom: 1px solid black;
+/*-------- SCROLL ----------*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 12px; 
+    height: 12px;
 }
 
-td {
-    padding: 20px 0;
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: var(--secondBG);
+    border-radius: 10px;
 }
-td > i {
-    font-size: 2em;
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 10px;
+    border: 2px solid var(--secondBG);
 }
-td:last-child {
-    text-align: right;
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--hover);
 }

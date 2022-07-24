@@ -1,8 +1,7 @@
 import View from "./View";
 import Controller from "./Controller";
 
-View.load();
-Controller.queryWeather('Houston');
+Controller.load();
 
 
 // TODO:
@@ -12,11 +11,12 @@ Controller.queryWeather('Houston');
 // daily stats -------
 // hourly stats --------
 // search location -----
+// extra stats --------
+
+// better CSS ~~
+// toggle c/f ~~ (NEED BETTER WAY)
+// dynamic BG ~~
 
 // use current location
-// dynamic BG & colors
 // hourly & daily line graph
-// extra stats
-// toggle c/f
-// better CSS
 // clean code

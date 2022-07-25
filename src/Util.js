@@ -29,7 +29,7 @@ export default class Util {
         if(dt)
             dtObj = fromUnixTime(dt + timezone);
         else
-            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone - 7200); // need to sub 2 hrs for some reason
+            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone);
         let date = Util.formatDate(dtObj);
         let time = Util.formatTime(dtObj);
 
@@ -41,7 +41,7 @@ export default class Util {
         if(dt)
             dtObj = fromUnixTime(dt + timezone);
         else
-            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone - 7200);
+            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone);
 
         let day = dtObj.getUTCDay();
         switch(day){
@@ -61,7 +61,7 @@ export default class Util {
         if(dt)
             dtObj = fromUnixTime(dt + timezone);
         else
-            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone - 7200);
+            dtObj = fromUnixTime(getUnixTime(new Date()) + timezone);
 
         let day = dtObj.getUTCDate();
         return day;

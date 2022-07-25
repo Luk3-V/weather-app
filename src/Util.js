@@ -92,13 +92,8 @@ export default class Util {
         return hour + ":" + min + " " + ampm;
     }
 
-    static convertTemp(temp, unit) {
-        if(unit == 'F')
-            temp = (temp * 1.8) + 32;
-        else
-            temp = (temp - 32) / 1.8;
-
-        return temp;
+    static toCelcius(temp) {
+        return (temp - 32) / 1.8;
     }
 
     static getWeatherIcon(id) {

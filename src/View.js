@@ -32,20 +32,23 @@ export default class View {
         unitToggle.onclick = Controller.toggleUnitEvent;
     }
 
-    static showAll(location, data, imageUrl) {
-        View.showCurrentWeather(location, data, imageUrl);
-        View.showHourlyWeather(data);
-        View.showDailyWeather(data);
+    static showAll(location, data, unit, imageUrl) {
+        View.showCurrentWeather(location, data, unit, imageUrl);
+        View.showHourlyWeather(data, unit);
+        View.showDailyWeather(data, unit);
     }
 
-    static showCurrentWeather(location, data, imageUrl) {
+    static showCurrentWeather(location, data, unit, imageUrl) {
         let dt = Util.getDateTimeString(null, data.timezone_offset);
 
-        locationElement.innerHTML = '' + location;
+        locationElement.innerHTML = '' + location.charAt(0).toUpperCase() + location.substring(1);
         dateElement.innerHTML = dt.date;
         timeElement.innerHTML = dt.time;
         skyElement.innerHTML = data.current.weather[0].main;
-        tempElement.innerHTML = `<h1>${Math.round(data.current.temp)}</h1><span>°${Controller.unit}</span>`;
+        if(unit == 'C')
+            tempElement.innerHTML = `<h1>${Math.round(Util.toCelcius(data.current.temp))}</h1><span>°${unit}</span>`;
+        else
+            tempElement.innerHTML = `<h1>${Math.round(data.current.temp)}</h1><span>°${unit}</span>`;
         feelsElement.innerHTML = 'Feels Like: ' + data.current.feels_like + '°';
     
         windElement.innerHTML = data.current.wind_speed + ' mph';
@@ -53,26 +56,32 @@ export default class View {
         precipitationElement.innerHTML = (data.hourly[0].precipitation ? Math.round(data.hourly[0].precipitation) : 0) + ' in';
         visibilityElement.innerHTML = data.current.visibility + ' mi';
         humidityElement.innerHTML = data.current.humidity + '%';
-        dewpointElement.innerHTML = Math.round(data.current.dew_point) + '°';
+        if(unit == 'C')
+            dewpointElement.innerHTML = Math.round(Util.toCelcius(data.current.dew_point)) + '°';
+        else   
+            dewpointElement.innerHTML = Math.round(data.current.dew_point) + '°';
         pressureElement.innerHTML = data.current.pressure + ' inHg';
         uvElement.innerHTML = data.current.uvi + ' of 10';
 
         imageElement.setAttribute('src', imageUrl);
     }
 
-    static showHourlyWeather(data) {
+    static showHourlyWeather(data, unit) {
         hourlyList.innerHTML = '';
         data.hourly.forEach((hour, index) => {
             if(index == 0 || index >= 12)
                 return;
 
             let dt = Util.getDateTimeString(hour.dt, data.timezone_offset);
+            let hourTemp = Math.round(hour.temp);
+            if(unit == 'C')
+                hourTemp = Math.round(Util.toCelcius(hour.temp));
 
             let listItem = document.createElement('div');
             listItem.classList.add('hour');
             listItem.innerHTML = `
             <span>${dt.time.replace(dt.time.substring(dt.time.indexOf(':'), dt.time.indexOf(' ')), '')}</span>
-            <span class='hour-temp'>${Math.round(hour.temp)}°</span>
+            <span class='hour-temp'>${hourTemp}°</span>
             <i class="fa-solid ${Util.getWeatherIcon(hour.weather[0].icon)}"></i>
             <span class="hour-rain"><i class="fa-solid fa-droplet"></i> ${hour.rain ? Math.round(hour.rain) : 0}%</span>`;
 
@@ -80,7 +89,7 @@ export default class View {
         });
     }
 
-    static showDailyWeather(data) {
+    static showDailyWeather(data, unit) {
         dailyList.innerHTML = '';
         data.daily.forEach((day, index) => {
             if(index == 0)
@@ -88,12 +97,18 @@ export default class View {
 
             let dayOfWeek = Util.getDayOfWeek(day.dt, data.timezone_offset);
             let dayOfMonth = Util.getDayOfMonth(day.dt, data.timezone_offset);
-
+            let dayTemp = Math.round(day.temp.day);
+            let nightTemp = Math.round(day.temp.night);
+            if(unit == 'C'){
+                dayTemp = Math.round(Util.toCelcius(day.temp.day));
+                nightTemp = Math.round(Util.toCelcius(day.temp.night));
+            }
+                
             let listItem = document.createElement('div');
             listItem.classList.add('day');
             listItem.innerHTML = `
             <span class="day-of-week">${dayOfWeek} ${dayOfMonth}</span>
-            <span class="day-temp"><span>${Math.round(day.temp.day)}°</span>/<span>${Math.round(day.temp.night)}°</span></span>
+            <span class="day-temp"><span>${dayTemp}°</span>/<span>${nightTemp}°</span></span>
             <div class="weather"><i class="fa-solid ${Util.getWeatherIcon(day.weather[0].icon)}"></i><span>${day.weather[0].main}</span></div>
             <span class="rain"><i class="fa-solid fa-droplet"></i> ${day.rain ? Math.round(day.rain) : 0}%</span>
             <span class="rain"><i class="fa-solid fa-wind"></i> ${Math.round(day.wind_speed)}mph</span>`;
@@ -103,19 +118,20 @@ export default class View {
     }
 
     static updateTemps(unit) {
-        let currentTemp = tempElement.querySelector('h1');
-        currentTemp.innerHTML = Math.round(Util.convertTemp(currentTemp.innerHTML, unit));
-        tempElement.querySelector("span").innerHTML = '°' + Controller.unit;
+        let data = Controller.getFromStorage("WEATHER");
 
-        dewpointElement.innerHTML = Math.round(Util.convertTemp(dewpointElement.innerHTML.replace('°', ''), unit))+'°';
+        tempElement.querySelector('h1').innerHTML = Math.round(unit == 'C' ? Util.toCelcius(data.current.temp) : data.current.temp);
+        tempElement.querySelector("span").innerHTML = '°' + unit;
 
-        document.querySelectorAll('.hour-temp').forEach(temp => {
-            temp.innerHTML = Math.round(Util.convertTemp(temp.innerHTML.replace('°', ''), unit))+'°';
+        dewpointElement.innerHTML = Math.round(unit == 'C' ? Util.toCelcius(data.current.dew_point) : data.current.dew_point) + '°';
+
+        document.querySelectorAll('.hour-temp').forEach((temp, i) => {
+            temp.innerHTML = Math.round(unit == 'C' ? Util.toCelcius(data.hourly[i+1].temp) : data.hourly[i+1].temp)+'°';
         });
 
-        document.querySelectorAll('.day-temp').forEach(temp => {
-            temp.firstChild.innerHTML = Math.round(Util.convertTemp(temp.firstChild.innerHTML.replace('°', ''), unit))+'°';
-            temp.lastChild.innerHTML = Math.round(Util.convertTemp(temp.lastChild.innerHTML.replace('°', ''), unit))+'°';
+        document.querySelectorAll('.day-temp').forEach((temp, i) => {
+            temp.firstChild.innerHTML = Math.round(unit == 'C' ? Util.toCelcius(data.daily[i+1].temp.day) : data.daily[i+1].temp.day)+'°';
+            temp.lastChild.innerHTML = Math.round(unit == 'C' ? Util.toCelcius(data.daily[i+1].temp.night) : data.daily[i+1].temp.night)+'°';
         });
 
         unitToggle.querySelector('.f').classList.toggle('active');

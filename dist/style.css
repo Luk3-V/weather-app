@@ -11,9 +11,12 @@
 body {
     --primary: whitesmoke;
     --secondary: #ddd;
+    --third: #888;
     --bodyBG: #111;
     --secondBG: #1c1c1c;
-    --hover: #ccc;
+    --thridBG: #333;
+    --button: #3c3c3c;
+    --hover: #444;
     font-family: Helvetica, sans-serif;
     color: var(--primary);
     background-color: var(--bodyBG);
@@ -38,18 +41,34 @@ form {
     margin-right: 10px;
     display: flex;
 }
-form > input {
+input {
     width: 100%;
     padding: 10px;
     border-radius: 5px 0 0 5px;
-    border: none;
-    background-color: var(--primary);
+    background-color: var(--thridBG);
+    border: 1px solid var(--button);
+    color: var(--primary);
     height: 30px;
     flex: 1 1 auto;
 }
+
+input:-webkit-autofill, input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--third);
+    opacity: 1; /* Firefox */
+}
+  
+:-ms-input-placeholder,::-ms-input-placeholder { /* Internet Explorer 10-11 & Microsoft Edge */
+    color: var(--third);
+}
+
+
 form > button {
-    background-color: var(--secondary);
-    border: 1px solid var(--secondary);
+    background-color: var(--button);
+    border: 1px solid var(--button);
+    color: var(--secondary);
     padding: 0 20px;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
@@ -64,9 +83,10 @@ form > button:hover {
     height: 30px;
     cursor: pointer;
     padding: 10px 25px;
-    background-color: var(--secondary);
+    background-color: var(--button);
+    color: var(--secondary);
     border-radius: 5px;
-    border: 1px solid var(--secondary);
+    border: 1px solid var(--button);
     font-size: 1rem;
 }
 .unit-toggle:hover{
@@ -81,6 +101,7 @@ form > button:hover {
 }
 .unit-toggle > .active {
     font-weight: bold;
+    font-size: 1.2em;
 }
 
 /* ------ CURRENT -------- */
@@ -274,7 +295,7 @@ form > button:hover {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: var(--secondary);
+    background: var(--third);
     border-radius: 10px;
     border: 2px solid var(--secondBG);
 }

@@ -15,7 +15,7 @@ const images = {
 export default class Controller {
     static load() {
         View.load();
-        Controller.queryWeather('Houston');
+        Controller.queryWeather('New York');
     }
 
     static async getLocation(location) {
@@ -43,7 +43,6 @@ export default class Controller {
     }
 
     static getImage(query) {
-        console.log(query.toLowerCase());
         if(query.toLowerCase() in images)
            return images[query.toLowerCase()];
         return images["clear"];
@@ -54,7 +53,6 @@ export default class Controller {
         let locationData = await Controller.getLocation(location);
         let weatherData = await Controller.getWeather(locationData[0].lat, locationData[0].lon, 'imperial');
         let imageUrl = Controller.getImage(weatherData.current.weather[0].main);
-        console.log(weatherData);
         Controller.saveToStorage("WEATHER", weatherData);
         View.showAll(location, weatherData, unit, imageUrl);
     }

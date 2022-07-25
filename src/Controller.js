@@ -23,7 +23,7 @@ export default class Controller {
             method: 'GET',
             redirect: 'follow'
         };
-        let result = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${WeatherAPPID}`, requestOptions)
+        let result = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${WeatherAPPID}`, requestOptions)
             .then(response => response.json())
             .catch(error => console.log('error', error));
     

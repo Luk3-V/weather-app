@@ -12,6 +12,27 @@ const images = {
     snow: "https://images.unsplash.com/photo-1547754980-3df97fed72a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
 };
 
+const weatherIcons = {
+    '01d': 'fa-sun',
+    '02d': 'fa-cloud-sun',
+    '03d': 'fa-cloud',
+    '04d': 'fa-cloud',
+    '09d': 'fa-cloud-showers-heavy',
+    '10d': 'fa-cloud-sun-rain',
+    '11d': 'fa-cloud-bolt',
+    '13d': 'fa-snowflake',
+    '50d': 'fa-cloud-smog',
+    '01n': 'fa-moon',
+    '02n': 'fa-cloud-moon',
+    '03n': 'fa-cloud',
+    '04n': 'fa-cloud',
+    '09n': 'fa-cloud-showers-heavy',
+    '10n': 'fa-cloud-moon-rain',
+    '11n': 'fa-cloud-bolt',
+    '13n': 'fa-snowflake',
+    '50n': 'fa-cloud-smog'
+};
+
 export default class Controller {
     static load() {
         View.load();
@@ -63,6 +84,10 @@ export default class Controller {
 
     static getFromStorage(name) {
         return JSON.parse(localStorage.getItem(name));
+    }
+
+    static getWeatherIcon(id) {
+        return weatherIcons[id];
     }
 
     // ------ EVENTS -----

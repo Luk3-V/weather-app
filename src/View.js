@@ -1,11 +1,11 @@
 import Util from "./Util";
 import Controller from "./Controller";
-const { format } = require("date-fns")
 
 const queryForm = document.querySelector(".query");
 const unitToggle = document.querySelector(".unit-toggle");
 
 const imageElement = document.querySelector(".current > img");
+const iconElement = document.querySelector(".current-icon");
 const locationElement = document.querySelector(".location");
 const skyElement = document.querySelector(".sky");
 const tempElement = document.querySelector(".temp");
@@ -44,6 +44,7 @@ export default class View {
         locationElement.innerHTML = '' + location.charAt(0).toUpperCase() + location.substring(1);
         dateElement.innerHTML = dt.date;
         timeElement.innerHTML = dt.time;
+        iconElement.classList = 'current-icon fa-solid ' + Controller.getWeatherIcon(data.current.weather[0].icon);
         skyElement.innerHTML = data.current.weather[0].main;
         if(unit == 'C')
             tempElement.innerHTML = `<h1>${Math.round(Util.toCelcius(data.current.temp))}</h1><span>°${unit}</span>`;
@@ -82,7 +83,7 @@ export default class View {
             listItem.innerHTML = `
             <span>${dt.time.replace(dt.time.substring(dt.time.indexOf(':'), dt.time.indexOf(' ')), '')}</span>
             <span class='hour-temp'>${hourTemp}°</span>
-            <i class="fa-solid ${Util.getWeatherIcon(hour.weather[0].icon)}"></i>
+            <i class="fa-solid ${Controller.getWeatherIcon(hour.weather[0].icon)}"></i>
             <span class="hour-rain"><i class="fa-solid fa-droplet"></i> ${hour.rain ? Math.round(hour.rain) : 0}%</span>`;
 
             hourlyList.appendChild(listItem);
@@ -109,7 +110,7 @@ export default class View {
             listItem.innerHTML = `
             <span class="day-of-week">${dayOfWeek} ${dayOfMonth}</span>
             <span class="day-temp"><span>${dayTemp}°</span>/<span>${nightTemp}°</span></span>
-            <div class="weather"><i class="fa-solid ${Util.getWeatherIcon(day.weather[0].icon)}"></i><span>${day.weather[0].main}</span></div>
+            <div class="weather"><i class="fa-solid ${Controller.getWeatherIcon(day.weather[0].icon)}"></i><span>${day.weather[0].main}</span></div>
             <span class="rain"><i class="fa-solid fa-droplet"></i> ${day.rain ? Math.round(day.rain) : 0}%</span>
             <span class="rain"><i class="fa-solid fa-wind"></i> ${Math.round(day.wind_speed)}mph</span>`;
 
